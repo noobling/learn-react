@@ -1,44 +1,66 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Learn React
 
-## Available Scripts
+* Only updates what is necessary 
 
-In the project directory, you can run:
+```
+function tick () {
+    const element = (
+        <div>
+            <h1> Hello, world! </h1>
+            <h2> It is {new Date().toLocaleTimeString()} </h2>
+        </div>
+    )
+    ReactDOM.render(element, document.getElementById('root'))
+}
 
-### `npm start`
+setInterval(tick, 1000)
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+React will only update the text in h2 and not all other elements
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* Always start component names with capital letter otherwise they are treated as DOM tags e.g. <div />
+* All react components must act like pure functions with respect to their props (cannot alter props within components)
 
-### `npm test`
+## Lifecycle
+It is important to free up resources when components are destroyed
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Lifecycle methods
+componentDidMount() {} Runs after the component has been rendered to the DOM
+componentWillUnMount() {} What to run to free up resources used by component e.g. clearInterval
 
-### `npm run build`
+## Data flows down
+* State is said to be local or encapsulated i.e. it is not accessible to any component other than the one that owns and sets it. A component may choose to pass its state down to its child components hence the data flows downwards model.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Keys only need to be unique for 
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## React re-renders itself when `setState` is called
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Two way data binding in React
+By default React does not come with two way data binding unlike in Vue and Angular. This approach leads to more boiler plate code but React claims that it takes less effort in finding and isolating bugs. This is due to the state living in one component and only that component can chang it. The surface area for bugs is greatly reduced
 
-### `npm run eject`
+## Special Children prop
+You can write something like this
+``` Javascript
+function WelcomeDialog() {
+    return (
+        <Boarder>
+            <h1>
+                This is the child stuff that is nested inside boarder component
+            </h1>
+        </Boarder>
+    )
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+function Boarder(props) {
+    return (
+        <div className="boarder">
+            {props.children}
+        </div>
+    )
+}
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+ReactDOM.render(
+    <WelcomeDialog />,
+    document.getElementById('root')
+)
+```

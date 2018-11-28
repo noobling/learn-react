@@ -1,0 +1,53 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="https://unpkg.com/react/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+        <script>
+            function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+    return React.createElement('p', null, 'The water would boil.');
+  }
+  return React.createElement('p', null, 'The water would not boil.');
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = { temperature: '' };
+  }
+
+  handleChange(e) {
+    this.setState({ temperature: e.target.value });
+  }
+
+  render() {
+    const temperature = this.state.temperature;
+    return (
+      React.createElement('fieldset', null,
+        React.createElement('legend', null, 'Enter temperature in Celsius:'),
+        React.createElement('input', {
+          value: temperature,
+          onChange: this.handleChange }),
+        React.createElement(BoilingVerdict, {
+          celsius: parseFloat(temperature) })));
+
+
+  }}
+
+
+ReactDOM.render(
+React.createElement(Calculator, null),
+document.getElementById('root'));
+//# sourceURL=pen.js
+
+            </script>
+    </body>
+    
+</html>
